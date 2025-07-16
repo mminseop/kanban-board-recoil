@@ -1,5 +1,8 @@
+import { useSetRecoilState } from 'recoil';
 import Boards from './components/Boards';
 import Controller from './components/Controller';
+import { dataState } from './recoil/atom';
+import { useEffect } from 'react';
 
 const MOCK_DATA = [
   {
@@ -52,6 +55,12 @@ const MOCK_DATA = [
 // src/recoil/atoms.js 파일을 새로 생성하고, atom을 정의합니다.
 
 function App() {
+  const setDataState = useSetRecoilState(dataState);
+
+  useEffect(() => {
+    setDataState(MOCK_DATA);
+  }, [setDataState]);
+
   return (
     <div className="flex flex-col h-screen">
       <header className="w-full h-[80px] bg-slate-800 flex flex-col items-center justify-center text-stone-100">
@@ -60,9 +69,9 @@ function App() {
       </header>
       <main className="flex-1 flex flex-col justify-between">
         <div className="grid grid-cols-3 gap-4 p-4 w-full">
-          <Boards type={'todo'} data={MOCK_DATA} />
-          <Boards type={'inprogress'} data={MOCK_DATA} />
-          <Boards type={'done'} data={MOCK_DATA} />
+          <Boards type={'todo'} />
+          <Boards type={'inprogress'} />
+          <Boards type={'done'} />
         </div>
         <Controller />
       </main>
